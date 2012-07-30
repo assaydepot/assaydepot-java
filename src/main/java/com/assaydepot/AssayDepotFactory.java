@@ -8,7 +8,6 @@ public class AssayDepotFactory {
    * Creates a AssayDepotFactory with the given configuration.
    *
    * @param conf the configuration to use
-   * @since Twitter4J 2.1.1
    */
   public AssayDepotFactory(Configuration conf) {
       if (conf == null) {
