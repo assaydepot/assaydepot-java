@@ -10,9 +10,9 @@ public class AssayDepotFactory {
    * @param conf the configuration to use
    */
   public AssayDepotFactory(Configuration conf) {
-      if (conf == null) {
-          throw new NullPointerException("configuration cannot be null");
-      }
-      this.conf = conf;
+    if (conf == null) {
+        throw new NullPointerException("configuration cannot be null");
+    }
+    this.conf = conf;
   }
 }
