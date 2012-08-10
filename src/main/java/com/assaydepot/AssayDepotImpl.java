@@ -83,7 +83,7 @@ public class AssayDepotImpl implements AssayDepot {
 					}
 					System.out.println( "token1 = ["+token+"]");
 					token = jp.nextToken();
-					results.getFacets().get( fieldName ).put( value1, value2 ));
+//					results.getFacets().get( fieldName ).put( value1, value2 ));
 					System.out.println( "token2 = ["+token+"]");
 					System.out.println( "token3 = ["+jp.getText()+"]");
 				}
@@ -166,7 +166,7 @@ public class AssayDepotImpl implements AssayDepot {
 				} else if( "permission".equals( fieldName )) {
 					pRef.setPermission( jp.getText() ); 
 				} else if( "score".equals( fieldName )) {
-					pRef.setScore( jp.getFloatValue() ); 
+//					pRef.setScore( jp.getFloatValue() ); 
 				} else if( "locations".equals( fieldName )) {
 					getLocations( jp, pRef );
 				} else if( "urls".equals( fieldName )) {
