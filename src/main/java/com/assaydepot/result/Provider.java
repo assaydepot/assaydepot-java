@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
-public class Provider extends BaseResult {
+public class Provider extends ProviderResult {
 
 	private String phoneNumber;
 	private String website;
@@ -26,7 +26,6 @@ public class Provider extends BaseResult {
 	private String diversityExplanation;
 	private Date createdAt;
 	private Date updatedAt;
-	private Map<String,String> urls;
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -147,14 +146,6 @@ public class Provider extends BaseResult {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-	public Map<String, String> getUrls() {
-		return urls;
-	}
-	public void setUrls(Map<String, String> urls) {
-		this.urls = urls;
-	}
-	
-	
+	}	
 	
 }

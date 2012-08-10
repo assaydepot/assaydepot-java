@@ -1,13 +1,11 @@
 package com.assaydepot.result;
 
-import java.util.Map;
 
-public class ProviderRef extends BaseResult {
+public class ProviderRef extends ProviderResult {
 
 	private String snippet;
 	private String permission;
-	private Float score;
-	private Map<String,String> locations;
+	private Double score;
 	
 	public String getSnippet() {
 		return snippet;
@@ -21,17 +19,11 @@ public class ProviderRef extends BaseResult {
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
-	public Float getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Float score) {
+	public void setScore(Double score) {
 		this.score = score;
-	}
-	public Map<String, String> getLocations() {
-		return locations;
-	}
-	public void setLocations(Map<String, String> locations) {
-		this.locations = locations;
 	}
 	
 	

@@ -1,11 +1,13 @@
 package com.assaydepot;
 
-import com.assaydepot.conf.Configuration;
-import com.assaydepot.result.ProviderRef;
-import com.assaydepot.result.WareRef;
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonParseException;
+
+import com.assaydepot.result.Results;
 
 public interface AssayDepot {
   
-	public ProviderRef getProviders();
-	public WareRef getWares();
+	public Results getProviders( String query ) throws JsonParseException, IOException;
+	public Results getWares( String query );
 }

@@ -9,7 +9,7 @@ public class Results {
 	private Integer page;
 	private Integer perPage;
 	private Double queryTime;
-	private Map<String,String> facets;
+	private Map<String,Map<String,String>> facets;
 	private List<WareRef> wareRefs;
 	private List<ProviderRef> providerRefs;
 	private List<Ware> wares;
@@ -39,10 +39,10 @@ public class Results {
 	public void setQueryTime(Double queryTime) {
 		this.queryTime = queryTime;
 	}
-	public Map<String, String> getFacets() {
+	public Map<String,Map<String, String>> getFacets() {
 		return facets;
 	}
-	public void setFacets(Map<String, String> facets) {
+	public void setFacets(Map<String,Map<String, String>> facets) {
 		this.facets = facets;
 	}
 	public List<WareRef> getWareRefs() {
