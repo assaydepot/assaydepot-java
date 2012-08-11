@@ -11,7 +11,7 @@ public class AssayDepotTest extends TestCase {
 		Configuration conf = new Configuration();
 		conf.setApiToken("5ae0a040967efe332d237277afb6beca");
 		AssayDepot assDeep = AssayDepotFactory.getAssayDepot( conf );
-		Results  results = assDeep.getProviders( "antibody" );
+		Results  results = assDeep.getProviderRefs( "antibody" );
 		assertEquals( results.getFacets().size() > 0, true );
 		assertEquals( results.getProviderRefs().size() > 0, true );
 	}

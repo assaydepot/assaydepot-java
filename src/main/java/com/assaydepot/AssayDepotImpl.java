@@ -29,7 +29,7 @@ public class AssayDepotImpl implements AssayDepot {
 		this.conf = conf;
 	}
 	
-	public Results getProviders( String query ) throws JsonParseException, IOException {
+	public Results getProviderRefs( String query ) throws JsonParseException, IOException {
 		StringBuilder urlBuilder = new StringBuilder( BASE_URL_STRING );
 		if( query != null ) {
 			urlBuilder.append( "?q=" ).append( query );

@@ -15,8 +15,10 @@ import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.assaydepot.conf.Configuration;
+import com.assaydepot.result.BaseResult;
 import com.assaydepot.result.Provider;
 import com.assaydepot.result.ProviderRef;
+import com.assaydepot.result.ProviderResult;
 import com.assaydepot.result.Results;
 
 public class AssayDepotTreeImpl implements AssayDepot {
@@ -28,7 +30,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		this.conf = conf;
 	}
 
-	public Results getProviders(String query) throws JsonParseException, IOException {
+	public Results getProviderRefs(String query) throws JsonParseException, IOException {
 		StringBuilder urlBuilder = new StringBuilder( BASE_URL_STRING );
 		if( query != null ) {
 			urlBuilder.append( "?q=" ).append( query );
@@ -81,7 +83,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		}
 	}
 	
-	private void doLocations( JsonNode locNode, ProviderRef pRef ) {
+	private void doLocations( JsonNode locNode, ProviderResult pResult ) {
 		int numLocs = locNode.size();
 		List <Map<String,String>> locList = new ArrayList<Map<String,String>>( numLocs );
 		Map<String,String> locMap = null;
@@ -94,10 +96,10 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			locMap.put( "longitude", node.path( "longitude" ).asText() );
 			locList.add( locMap );
 		}
-		pRef.setLocations( locList ); 
+		pResult.setLocations( locList ); 
 	}
 	
-	private void doUrls( JsonNode urlNode, ProviderRef pRef ) {
+	private void doUrls( JsonNode urlNode, BaseResult baseResult ) {
 		Iterator<String> fieldNames = urlNode.getFieldNames();
 		String fieldName = null;
 		Map<String,String> urlMap = new HashMap<String,String>();
@@ -105,7 +107,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			fieldName = fieldNames.next();
 			urlMap.put( fieldName, urlNode.path( fieldName ).getTextValue() );
 		}
-		pRef.setUrls( urlMap );
+		baseResult.setUrls( urlMap );
 	}
 	
 	private void doFacets( JsonNode facetNode, Results results ) {
