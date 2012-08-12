@@ -24,8 +24,8 @@ public class Provider extends ProviderResult {
 	private String greenExplanation;
 	private Boolean diversity;
 	private String diversityExplanation;
-	private Date createdAt;
-	private Date updatedAt;
+	private String createdAt;
+	private String updatedAt;
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -135,16 +135,16 @@ public class Provider extends ProviderResult {
 	public void setDiversityExplanation(String diversityExplanation) {
 		this.diversityExplanation = diversityExplanation;
 	}
-	public Date getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
-	public Date getUpdatedAt() {
+	public String getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}	
 	

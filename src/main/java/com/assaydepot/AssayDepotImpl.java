@@ -20,7 +20,8 @@ import com.assaydepot.result.ProviderResult;
 import com.assaydepot.result.Results;
 import com.assaydepot.result.WareRef;
 
-public class AssayDepotImpl implements AssayDepot {
+public class AssayDepotImpl 
+{
 
 	private static final String BASE_URL_STRING = "https://www.assaydepot.com/api/providers.json";
 	private Configuration conf;
