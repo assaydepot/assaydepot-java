@@ -22,8 +22,8 @@ public class AssayDepotTest extends TestCase {
 		Configuration conf = new Configuration();
 		conf.setApiToken("5ae0a040967efe332d237277afb6beca");
 		AssayDepot assDeep = AssayDepotFactory.getAssayDepot( conf );
-		Provider  provider = assDeep.getProvider( "1c929d31b856a4009453186a95927cd6" );
-		assertEquals( provider.getId(), "1c929d31b856a4009453186a95927cd6" );
+		Provider  provider = assDeep.getProvider( "5dad9ca114072e30801bc31de19fae1d" );
+		assertEquals( provider.getId(), "5dad9ca114072e30801bc31de19fae1d" );
 		assertEquals( provider.getKeywords().size() > 0, true );
 		assertEquals( provider.getCertifications().size() > 0, true );
 	}
