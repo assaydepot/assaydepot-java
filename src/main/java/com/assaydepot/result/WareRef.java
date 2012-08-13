@@ -1,11 +1,12 @@
 package com.assaydepot.result;
 
 import java.util.List;
+import java.util.Map;
 
 public class WareRef extends BaseResult {
 
 	private Double price;
-	private Integer turnAroundTime;
+	private Map<String,String> turnAroundTime;
 	private String Type;
 	private String snippet;
 	private List<String> providerIds;
@@ -17,10 +18,10 @@ public class WareRef extends BaseResult {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	public Integer getTurnAroundTime() {
+	public Map<String,String> getTurnAroundTime() {
 		return turnAroundTime;
 	}
-	public void setTurnAroundTime(Integer turnAroundTime) {
+	public void setTurnAroundTime(Map<String,String> turnAroundTime) {
 		this.turnAroundTime = turnAroundTime;
 	}
 	public String getType() {

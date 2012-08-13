@@ -26,6 +26,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 	private static final String BASE_PROVIDER_REF_QUERY_URL = "https://www.assaydepot.com/api/providers.json";
 	private static final String BASE_WARE_REF_QUERY_URL = "https://www.assaydepot.com/api/wares.json";
 	private static final String BASE_PROVIDER_URL = "https://www.assaydepot.com/api/providers/";
+	private static final String BASE_WARE_URL = "https://www.assaydepot.com/api/wares/";
 	
 	private Configuration conf;
 	
@@ -74,7 +75,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		provider.setDiversityExplanation( pNode.path( "diversity_explaination" ).getTextValue() );
 		provider.setCreatedAt( pNode.path( "created_at" ).asText() );
 		provider.setUpdatedAt( pNode.path( "updated_at" ).asText() );
-		provider.setUrls( doUrls( pNode.path( "urls") ));
+		provider.setUrls( doStringMap( pNode.path( "urls") ));
 		
 		return provider;
 	}
@@ -133,7 +134,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			newRef.setPermission( node.path("permission").getTextValue() );
 			newRef.setScore( node.path("score").getDoubleValue() );
 			newRef.setLocations( doLocations( node.path( "locations" )));
-			newRef.setUrls( doUrls( node.path( "urls" ) ));
+			newRef.setUrls( doStringMap( node.path( "urls" ) ));
 			
 			providerRefs.add( newRef );
 		}
@@ -156,13 +157,13 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return locList; 
 	}
 	
-	private Map<String,String> doUrls( JsonNode urlNode ) {
-		Iterator<String> fieldNames = urlNode.getFieldNames();
+	private Map<String,String> doStringMap( JsonNode node ) {
+		Iterator<String> fieldNames = node.getFieldNames();
 		String fieldName = null;
 		Map<String,String> urlMap = new HashMap<String,String>();
 		while( fieldNames.hasNext() ) {
 			fieldName = fieldNames.next();
-			urlMap.put( fieldName, urlNode.path( fieldName ).getTextValue() );
+			urlMap.put( fieldName, node.path( fieldName ).getTextValue() );
 		}
 		return urlMap;
 	}
@@ -226,12 +227,12 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			newRef.setName( node.path("name").getTextValue() );
 			newRef.setPrice( node.path("price").getDoubleValue() );
 			newRef.setType( node.path("type").getTextValue() );
-			newRef.setTurnAroundTime( node.path("turn_around_time").getIntValue() );
+			newRef.setTurnAroundTime( doStringMap( node.path( "turn_around_time" )));
 			newRef.setSnippet( node.path("snippet").getTextValue() );
 			newRef.setProviderIds( doArray( node.path( "provider_ids" )));
 			newRef.setProviderNames( doArray( node.path( "provider_names" )));
 			newRef.setScore( node.path( "score" ).getDoubleValue());
-			newRef.setUrls( doUrls( node.path( "urls" ) ));
+			newRef.setUrls( doStringMap( node.path( "urls" ) ));
 			
 			wareRefs.add( newRef );
 		}
@@ -239,8 +240,53 @@ public class AssayDepotTreeImpl implements AssayDepot {
 	}
 
 	public Ware getWare(String id) throws JsonParseException, IOException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		StringBuilder urlBuilder = new StringBuilder( BASE_WARE_URL );
+		if( id != null ) {
+			urlBuilder
+				.append( id )
+				.append( ".json?access_token=" )
+				.append( conf.getApiToken() );
+			
+		}
+		
+		JsonNode rootNode = doParseURL( urlBuilder.toString() );
+		JsonNode wNode = rootNode.path( "ware" );
+		Ware ware = new Ware();
+		
+		ware.setId( wNode.path( "id" ).getTextValue() );
+		ware.setSlug( wNode.path( "slug" ).getTextValue() );
+		ware.setName( wNode.path( "name" ).getTextValue() );
+		ware.setPrice( wNode.path( "price" ).getDoubleValue() );
+		ware.setTurnAroundTime( doStringMap( wNode.path( "turn_around_time" )));
+		ware.setType( wNode.path( "type" ).getTextValue() );
+		ware.setSnippet( wNode.path("snippet").getTextValue() );
+		ware.setKeywords( doArray( wNode.path( "keywords" )));
+		ware.setPromoDescription( wNode.path( "promo_description" ).getTextValue() );
+		ware.setContactEmails( doArray( wNode.path( "contact_emails" )));
+		ware.setResponsibleEmails( doArray( wNode.path( "responsible_emails" )));
+		ware.setPermission( wNode.path( "permission" ).getTextValue() );
+		ware.setFirstPublishedAt( wNode.path( "first_published_at" ).asText());
+		ware.setProteinType( wNode.path( "protein_type" ).getTextValue());
+		ware.setClonality( wNode.path( "clonality" ).getTextValue() );
+		ware.setClonality( wNode.path( "cell_source" ).getTextValue() );
+		ware.setSpecies( wNode.path( "species" ).getTextValue() );
+		ware.setTissue( wNode.path( "tissue" ).getTextValue() );
+		ware.setAmount( wNode.path( "amount" ).getTextValue() );
+		ware.setProteinTag( wNode.path( "protein_tag" ).getTextValue() );
+		ware.setAntigenSpecies( wNode.path( "antigen_species" ).getTextValue() );
+		ware.setProductApplications( doArray( wNode.path( "product_applications" )));
+		ware.setIgType( wNode.path( "ig_type" ).getTextValue() );
+		ware.setPurificationMethod( wNode.path( "purification_method" ).getTextValue() );
+		ware.setPeptideType( wNode.path( "peptide_type" ).getTextValue() );
+		ware.setCasNumber( wNode.path( "cas_number" ).asText() );
+		ware.setUnspsc( wNode.path( "unspsc" ).getTextValue() );
+		ware.setSupplierPartId( wNode.path( "supplier_part_id" ).asText() );		
+		ware.setCreatedAt( wNode.path( "created_at" ).asText() );
+		ware.setUpdatedAt( wNode.path( "updated_at" ).asText() );
+		ware.setUrls( doStringMap( wNode.path( "urls") ));
+		
+		return ware;
 	}
 
 }
