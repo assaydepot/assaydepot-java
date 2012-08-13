@@ -18,10 +18,13 @@ import com.assaydepot.conf.Configuration;
 import com.assaydepot.result.Provider;
 import com.assaydepot.result.ProviderRef;
 import com.assaydepot.result.Results;
+import com.assaydepot.result.Ware;
+import com.assaydepot.result.WareRef;
 
 public class AssayDepotTreeImpl implements AssayDepot {
 
-	private static final String BASE_PROVIDERS_QUERY_URL = "https://www.assaydepot.com/api/providers.json";
+	private static final String BASE_PROVIDER_REF_QUERY_URL = "https://www.assaydepot.com/api/providers.json";
+	private static final String BASE_WARE_REF_QUERY_URL = "https://www.assaydepot.com/api/wares.json";
 	private static final String BASE_PROVIDER_URL = "https://www.assaydepot.com/api/providers/";
 	
 	private Configuration conf;
@@ -54,15 +57,15 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		provider.setName( pNode.path( "name" ).getTextValue() );
 		provider.setPhoneNumber( pNode.path( "phone_number" ).getTextValue() );
 		provider.setWebsite( pNode.path( "website" ).getTextValue() );
-		provider.setServiceAreas( doGetArray( pNode.path( "service_areas" )));
+		provider.setServiceAreas( doArray( pNode.path( "service_areas" )));
 		provider.setHeadquarters( pNode.path( "headquarters" ).getTextValue() );
-		provider.setLaboratories( doGetArray( pNode.path( "laboratories" )));
+		provider.setLaboratories( doArray( pNode.path( "laboratories" )));
 		provider.setYearEstablished( pNode.path( "year_established" ).getIntValue() );
 		provider.setNumEmployees( pNode.path( "number_of_employees" ).asText() );
 		provider.setDescription( pNode.path( "description" ).getTextValue() );
-		provider.setKeywords( doGetArray( pNode.path( "keywords" )));
-		provider.setCertifications( doGetArray( pNode.path( "certifications" )));
-		provider.setProfessionalAssociations( doGetArray( pNode.path( "professional_associations" )));
+		provider.setKeywords( doArray( pNode.path( "keywords" )));
+		provider.setCertifications( doArray( pNode.path( "certifications" )));
+		provider.setProfessionalAssociations( doArray( pNode.path( "professional_associations" )));
 		provider.setPermission( pNode.path( "permission" ).getTextValue() );
 		provider.setOrigin( pNode.path( "origin" ).getTextValue() );
 		provider.setGreen( pNode.path( "green" ).asBoolean() );
@@ -76,7 +79,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return provider;
 	}
 	
-	private List<String> doGetArray( JsonNode arrayNode ) {
+	private List<String> doArray( JsonNode arrayNode ) {
 		List<String> list = new ArrayList<String>();
 		for( int i=0; i < arrayNode.size(); i++ ) {
 			list.add( arrayNode.get( i ).getTextValue() );
@@ -85,7 +88,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 	}
 	
 	public Results getProviderRefs(String query) throws JsonParseException, IOException {
-		StringBuilder urlBuilder = new StringBuilder( BASE_PROVIDERS_QUERY_URL );
+		StringBuilder urlBuilder = new StringBuilder( BASE_PROVIDER_REF_QUERY_URL );
 		if( query != null ) {
 			urlBuilder.append( "?q=" ).append( query );
 		}
@@ -96,7 +99,6 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		JsonNode rootNode = doParseURL( urlBuilder.toString() );		
 
 		Results results = new Results();
-		results.setProviderRefs( new ArrayList<ProviderRef>() );
 
 		results.setTotal( rootNode.path( "total" ).getIntValue() );
 		results.setPage( rootNode.path( "page" ).getIntValue() );
@@ -187,7 +189,56 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return facets;
 	}
 
-	public Results getWares(String query) {
+
+	public Results getWareRefs(String query) throws JsonParseException, IOException {
+			StringBuilder urlBuilder = new StringBuilder( BASE_WARE_REF_QUERY_URL );
+			if( query != null ) {
+				urlBuilder.append( "?q=" ).append( query );
+			}
+			if( conf.getApiToken() != null ) {
+				urlBuilder.append( "&access_token=" ).append( conf.getApiToken() );
+			}
+
+			JsonNode rootNode = doParseURL( urlBuilder.toString() );		
+
+			Results results = new Results();
+
+			results.setTotal( rootNode.path( "total" ).getIntValue() );
+			results.setPage( rootNode.path( "page" ).getIntValue() );
+			results.setPerPage( rootNode.path( "per_page" ).getIntValue() );
+			results.setQueryTime( rootNode.path( "query_time" ).getDoubleValue() );
+			results.setFacets( doFacets( rootNode.path( "facets" )));
+			results.setWareRefs( doWareRefs( rootNode.path( "ware_refs" )));
+			
+			return results;
+	}
+	
+	private List<WareRef> doWareRefs( JsonNode pRefNode ) {
+		WareRef newRef = null;
+		int numRefs = pRefNode.size();
+		JsonNode node = null;
+		List<WareRef> wareRefs = new ArrayList<WareRef>();
+		for( int i=0; i < numRefs; i++ ) {
+			node = pRefNode.get( i );
+			newRef = new WareRef();
+			newRef.setId( node.path("id").getTextValue() );
+			newRef.setSlug( node.path("slug").getTextValue() );
+			newRef.setName( node.path("name").getTextValue() );
+			newRef.setPrice( node.path("price").getDoubleValue() );
+			newRef.setType( node.path("type").getTextValue() );
+			newRef.setTurnAroundTime( node.path("turn_around_time").getIntValue() );
+			newRef.setSnippet( node.path("snippet").getTextValue() );
+			newRef.setProviderIds( doArray( node.path( "provider_ids" )));
+			newRef.setProviderNames( doArray( node.path( "provider_names" )));
+			newRef.setScore( node.path( "score" ).getDoubleValue());
+			newRef.setUrls( doUrls( node.path( "urls" ) ));
+			
+			wareRefs.add( newRef );
+		}
+		return wareRefs;
+	}
+
+	public Ware getWare(String id) throws JsonParseException, IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}

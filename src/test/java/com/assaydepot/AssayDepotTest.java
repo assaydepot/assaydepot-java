@@ -28,4 +28,13 @@ public class AssayDepotTest extends TestCase {
 		assertEquals( provider.getCertifications().size() > 0, true );
 	}
 
+	public void testGetWareRefs() throws Exception {
+		Configuration conf = new Configuration();
+		conf.setApiToken("5ae0a040967efe332d237277afb6beca");
+		AssayDepot assDeep = AssayDepotFactory.getAssayDepot( conf );
+		Results  results = assDeep.getWareRefs( "antibody" );
+		assertEquals( results.getWareRefs().size() > 0, true );
+		assertEquals( results.getFacets().size() > 0, true );
+	}
+	
 }
