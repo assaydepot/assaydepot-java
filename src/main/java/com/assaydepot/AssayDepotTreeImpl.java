@@ -1,6 +1,7 @@
 package com.assaydepot;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,10 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.assaydepot.conf.Configuration;
@@ -28,13 +30,14 @@ public class AssayDepotTreeImpl implements AssayDepot {
 	private static final String BASE_PROVIDER_URL = "https://www.assaydepot.com/api/providers/";
 	private static final String BASE_WARE_URL = "https://www.assaydepot.com/api/wares/";
 	
+	private static final Logger log = Logger.getLogger( AssayDepot.class );
 	private Configuration conf;
 	
 	AssayDepotTreeImpl( Configuration conf ) {
 		this.conf = conf;
 	}
 
-	public Provider getProvider( String id ) throws JsonParseException, IOException {
+	public Provider getProvider( String id )  {
 		StringBuilder urlBuilder = new StringBuilder( BASE_PROVIDER_URL );
 		if( id != null ) {
 			urlBuilder
@@ -88,7 +91,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return list;
 	}
 	
-	public Results getProviderRefs(String query) throws JsonParseException, IOException {
+	public Results getProviderRefs(String query) {
 		StringBuilder urlBuilder = new StringBuilder( BASE_PROVIDER_REF_QUERY_URL );
 		if( query != null ) {
 			urlBuilder.append( "?q=" ).append( query );
@@ -111,12 +114,23 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return results;
 	}
 
-	private JsonNode doParseURL( String urlString ) throws IOException {
+	private JsonNode doParseURL( String urlString ) {
 		ObjectMapper mapper = new ObjectMapper();
-		URL url = new URL( urlString );
-		JsonFactory f = new JsonFactory();
-		JsonParser jp = f.createJsonParser( url.openStream() );
-		return mapper.readTree( jp );
+		JsonNode rootNode = null;
+		URL url = null;
+		try {
+			url = new URL( urlString );
+			JsonFactory f = new JsonFactory();
+			JsonParser jp = f.createJsonParser( url.openStream() );
+			rootNode = mapper.readTree( jp );
+		} catch (JsonProcessingException jpex ) {
+			log.error("Problem accessing json are you getting json back on this url ["+urlString+"] ?", jpex);
+		} catch (MalformedURLException malex) {
+			log.error( "Problem accessing url ["+urlString+"]", malex );
+		} catch (IOException ioex ) {
+			log.error("Most likely problem accessing url ["+urlString+"] or internet", ioex );
+		}
+		return rootNode;
 	}
 	
 	private List<ProviderRef> doProviderRefs( JsonNode pRefNode ) {
@@ -191,7 +205,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 	}
 
 
-	public Results getWareRefs(String query) throws JsonParseException, IOException {
+	public Results getWareRefs(String query) {
 			StringBuilder urlBuilder = new StringBuilder( BASE_WARE_REF_QUERY_URL );
 			if( query != null ) {
 				urlBuilder.append( "?q=" ).append( query );
@@ -239,7 +253,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return wareRefs;
 	}
 
-	public Ware getWare(String id) throws JsonParseException, IOException {
+	public Ware getWare(String id) {
 		
 		StringBuilder urlBuilder = new StringBuilder( BASE_WARE_URL );
 		if( id != null ) {

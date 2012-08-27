@@ -10,8 +10,8 @@ import com.assaydepot.result.Ware;
 
 public interface AssayDepot {
   
-	public Results getProviderRefs( String query ) throws JsonParseException, IOException;
-	public Provider getProvider( String id ) throws JsonParseException, IOException;
-	public Results getWareRefs( String query ) throws JsonParseException, IOException;
-	public Ware getWare( String id ) throws JsonParseException, IOException;
+	public Results getProviderRefs( String query );
+	public Provider getProvider( String id );
+	public Results getWareRefs( String query );
+	public Ware getWare( String id );
 }
