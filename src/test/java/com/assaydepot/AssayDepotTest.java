@@ -7,12 +7,21 @@ import com.assaydepot.result.Provider;
 import com.assaydepot.result.Results;
 import com.assaydepot.result.Ware;
 
+import java.net.URL;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class AssayDepotTest extends TestCase {
 	protected Configuration conf;
 
-  protected void setUp() {
+  protected void setUp() throws Exception {
+  	ClassLoader loader = Thread.currentThread().getContextClassLoader(); 
+  	InputStream stream = loader.getResourceAsStream("assaydepot.properties");
+  	Properties prop = new Properties();
+  	prop.load(stream);
 		conf = new Configuration();
-		conf.setApiToken("5ae0a040967efe332d237277afb6beca");
+		conf.setUrl(new URL(prop.getProperty("assaydepot.url")));
+		conf.setApiToken(prop.getProperty("assaydepot.api_token"));
   }
 
 	public void testProviderQuery() throws Exception {
