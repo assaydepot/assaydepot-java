@@ -37,6 +37,12 @@ conf.setUrl(new URL(prop.getProperty("assaydepot.url")));
 conf.setApiToken(prop.getProperty("assaydepot.api_token"));
 ```
 
+The properties file would look like:
+```
+assaydepot.url=https://www.assaydepot.com/api
+assaydepot.api_token=YOUR TOKEN HERE
+```
+
 ## Accessing Wares
 
 The SDK allows users to search for and get the details of wares in the Assay Depot system. You search using the ```AssayDepot#getWareRefs``` method. For example, to search for wares containing the word "antibody" you would do the following (assuming you've already created the ```conf``` object:
