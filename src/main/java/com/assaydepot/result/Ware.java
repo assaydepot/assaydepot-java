@@ -2,21 +2,22 @@ package com.assaydepot.result;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Ware extends BaseResult {
 
-	private Float price;
-	private Integer turnAroundTime;
+	private Double price;
+	private Map<String,String> turnAroundTime;
 	private String type;
 	private String snippet;
 	private String description;
 	private String htmlDescription;
-	private String keywords;
+	private List<String> keywords;
 	private String promoDescription;
 	private List<String> contactEmails;
 	private List<String> responsibleEmails;
 	private String permission;
-	private Date firstPublishedAt;
+	private String firstPublishedAt;
 	private String proteinType;
 	private String clonality;
 	private String cellSource;
@@ -32,18 +33,18 @@ public class Ware extends BaseResult {
 	private String casNumber;
 	private String unspsc;
 	private String supplierPartId;
-	private Date createdAt;
-	private Date updatedAt;
-	public Float getPrice() {
+	private String createdAt;
+	private String updatedAt;
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
-	public Integer getTurnAroundTime() {
+	public Map<String,String> getTurnAroundTime() {
 		return turnAroundTime;
 	}
-	public void setTurnAroundTime(Integer turnAroundTime) {
+	public void setTurnAroundTime(Map<String,String> turnAroundTime) {
 		this.turnAroundTime = turnAroundTime;
 	}
 	public String getType() {
@@ -70,10 +71,10 @@ public class Ware extends BaseResult {
 	public void setHtmlDescription(String htmlDescription) {
 		this.htmlDescription = htmlDescription;
 	}
-	public String getKeywords() {
+	public List<String> getKeywords() {
 		return keywords;
 	}
-	public void setKeywords(String keywords) {
+	public void setKeywords(List<String> keywords) {
 		this.keywords = keywords;
 	}
 	public String getPromoDescription() {
@@ -100,10 +101,10 @@ public class Ware extends BaseResult {
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
-	public Date getFirstPublishedAt() {
+	public String getFirstPublishedAt() {
 		return firstPublishedAt;
 	}
-	public void setFirstPublishedAt(Date firstPublishedAt) {
+	public void setFirstPublishedAt(String firstPublishedAt) {
 		this.firstPublishedAt = firstPublishedAt;
 	}
 	public String getProteinType() {
@@ -196,16 +197,16 @@ public class Ware extends BaseResult {
 	public void setSupplierPartId(String supplierPartId) {
 		this.supplierPartId = supplierPartId;
 	}
-	public Date getCreatedAt() {
+	public String getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
-	public Date getUpdatedAt() {
+	public String getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(String updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	

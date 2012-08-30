@@ -1,0 +1,75 @@
+{
+	"total":613,
+	"page":1,
+	"per_page":"1000",
+	"query_time":0.168114184,
+	"facets":{
+		"source":{"External":613},
+		"ware_type":{
+			"CustomService":496,
+			"Service":90,
+			"Product":23,
+			"Consultant":4
+		},
+		"available_provider_names":{
+			"Reagent Proteins":414,"ProSci":33,"Assay Depot":31,"GenScript":31,"The Research Network":21,"Aragen Bioscience":20,
+			"Eureka Therapeutics":17,"AIBioTech":16,"Maine Biotechnology Services":16,"Marin Biologic Laboratories":16,
+			"EMD Millipore":15,"Sino Biological":15,"Arvys Proteins":14,"BioAtla":14,"Charles River Laboratories":14,
+			"Precision Antibody":14,"ModiQuest Research":13,"Shanghai ChemPartner":13,"Proteos":12,"A4P Consulting":11,
+			"LakePharma":11,"Meridian Life Science":11,"ProBioGen":11,"Life Technologies":10,"SynBuild":10,"Blue Sky Biotech":9,"Covance":9,"GenWay Biotech":9,"Green Mountain Antibody":9,
+			"Scottish Biomedical":9,"Vivo Bio Tech":9,"Allele Biotech":8,"Enzo Life Sciences":8,"Eurogentec":8,"Exon BioSystems":8,"SynoGene":8,"Abcam":7,"Abnova":7,"Aldevron":7,"Antibodies Incorporated":7,"Applied Biological Materials (ABM)":7,"Array Bridge":7,"Atlantic Bone Screen":7,"Base Pair Biotechnologies":7,"Bio-Synthesis, Inc.":7,"Capra Science":7,"Celonic":7,"Creative Biolabs":7,"Entelechon":7,"IBA":7,"IMMUNI T":7,"PharmaLegacy Laboratories":7,"ProtevoBio":7,"QED Bioscience":7,"SDIX":7,"Vrisko":7,"Abpro":6,"Absea":6,"Adv. BiotekServices":6,"Beijing Creanovo Biotechnology":6,"Biomatik":6,"CIT Safety and Health Research Labs":6,"CPGR (Centre for Proteomic and Genomic Research)":6,"CovalAb":6,"CovalX":6,"Cytometry Research":6,"HTS Resources":6,"Insight Biotechnology":6,"Karebay Biochem":6,"Lampire Biological Laboratories":6,"New England Peptide":6,"OriGene Technologies":6,"RELIATech":6,"Ricerca Biosciences":6,"SBH Sciences":6,"SRI Biosciences":6,"Silicon Kinetics":6,"Syd Labs":6,"ANP Technologies":5,"ATGCell":5,"AbBioSci":5,"Acumen Research Laboratories":5,"AnalytiCon Discovery":5,"Analytical Ventura":5,"BPS Bioscience":5,"BRT-Burleson Research Technologies":5,"BioCentrum":5,"Biomolecular Integrations":5,"Biotem":5,"Caliper LifeSciences":5,"Cambridge Research Biochemicals":5,"Chesapeake PERL":5,"Crown Bioscience":5,"Cygnus Technologies":5,"Cyto360":5,"CytoMol":5,"Dabur Research Foundation":5,"Early Drug Discovery Consulting":5,"Exbio":5,"GTP Technology":5},
+		"certifications":{},
+		"countries":{
+			"United States":30,"Netherlands":6,"Canada":1
+		},
+		"protein_type":{
+			"Miscellaneous":31,"Bacterial and Viral Antigens":12,"Enzymes":8,"Growth Factors":3,"Kinases":2,
+			"Vaccine Components":2,"Chemokines":1,"Cytokines":1
+		},
+		"clonality":{
+			"Monoclonal":333,"Polyclonal":20
+		},
+		"cell_source":{
+			"":553,"E. coli":34,"Sf9 insect cells":11,"Pseudomonas fluorescens":4,"Pichia pastoris":2,
+			"Saccharomyces cerevisiae":2,"Baculovirus":1,"Bovine Myocardium":1,"CHO":1,"Human Erythrocytes":1,
+			"Human Urine":1,"Sf9 Insect Cells":1,"Sf9 Insect cells":1
+		},
+		"species":{
+			"Mouse":296,"Human":41,"Rat":29,"Rabbit":19,"Hepatitis B virus":5,"Hamster":4,"E. coli":3,"HIV":3,
+			"HTLV":2,"Vibrio cholerae":2,"Bovine":1,"Goat":1,"Streptococcos":1
+		},
+		"tissue":{
+			"Cells":7,"Erythrocytes":1,"Myocardium":1,"Ovary":1,"Urine":1
+		}
+	},
+	"ware_refs":[{
+		"id":"00ca892864cb56087711f438764ea31e",
+		"slug":"antibody-amplification",
+		"name":"Antibody Amplification",
+		"price":0.0,
+		"type":"CustomService",
+		"turn_around_time":null,
+		"snippet":"Take your antibody-based therapeutic to the next level with custom antibody amplification services",
+		"provider_ids":[
+			"5d0173557d3712cb391a381958f1a357","30e707161e06f8909ad28e586520de7b","ae82d9d2c9dd4902be154a3202646689",
+			"b40110c1b69df3422dc9047e97212b07","b0de330f2b8381f515a879b7d358ea58","1fd266d423011b5d62fcfe24627a5967",
+			"4e4ced8e5e6154f7b6280cc6e7eade78","af240bb81ba1b35e504a997e831cfb22","fd683b475e8418180dfe281da37eb94a",
+			"3d9dd965c099585e4b27d4857637da17","b7ad94444cb13d5ec8f477b107ada530","5dad9ca114072e30801bc31de19fae1d",
+			"9845b1195bc1ef89f7f6d62370597ace","f285cd27dbebaad167b9a98a68b8e535","d12c65b79ff46628c6eb8f93f33e43a6",
+			"4c06f3f88a797d74e2964a51273f3b04","90df4f14f3f743ca38c2793624fcf31d","79d722a6946d0c528e15b22fbbf144b2",
+			"dd3d391a3d05de98c43bb2e1f5d542ee","02bf494958730d7ef1bbaafbb0ba5c8e","2b533ab7e055b84e6b6e1d30b557cd29",
+			"ac59c66ab6b728d736df72b79161f923"
+		],
+		"provider_names":[
+			"ATGCell","Abgent","Assay Depot","BioCentrum","Exon BioSystems","GL Biochem",
+			"Antigen Targeting Consulting Service","TGA Sciences","Life Technologies","Gremlyn Biosciences",
+			"AIBioTech","Precision Antibody","LakePharma","WuXi AppTec","Aragen Bioscience","SynBuild",
+			"Applied Biological Materials (ABM)","Bio-AAA","The Research Network","Triage Pharmaceuticals",
+			"Aldevron","Miltenyi Biotec"
+		],
+		"score":2.6168075,
+		"urls":{
+			"storefront":"https://www.assaydepot.com/service/antibody-amplification",
+			"backoffice":"https://backoffice.assaydepot.com/wares/antibody-amplification/edit"
+		}
+	},

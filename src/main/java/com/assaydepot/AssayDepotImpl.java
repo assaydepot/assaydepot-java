@@ -20,7 +20,8 @@ import com.assaydepot.result.ProviderResult;
 import com.assaydepot.result.Results;
 import com.assaydepot.result.WareRef;
 
-public class AssayDepotImpl implements AssayDepot {
+public class AssayDepotImpl 
+{
 
 	private static final String BASE_URL_STRING = "https://www.assaydepot.com/api/providers.json";
 	private Configuration conf;
@@ -29,7 +30,7 @@ public class AssayDepotImpl implements AssayDepot {
 		this.conf = conf;
 	}
 	
-	public Results getProviders( String query ) throws JsonParseException, IOException {
+	public Results getProviderRefs( String query ) throws JsonParseException, IOException {
 		StringBuilder urlBuilder = new StringBuilder( BASE_URL_STRING );
 		if( query != null ) {
 			urlBuilder.append( "?q=" ).append( query );

@@ -1,26 +1,27 @@
 package com.assaydepot.result;
 
 import java.util.List;
+import java.util.Map;
 
 public class WareRef extends BaseResult {
 
-	private Float price;
-	private Integer turnAroundTime;
+	private Double price;
+	private Map<String,String> turnAroundTime;
 	private String Type;
 	private String snippet;
 	private List<String> providerIds;
 	private List<String> providerNames;
-	private Float score;
-	public Float getPrice() {
+	private Double score;
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
-	public Integer getTurnAroundTime() {
+	public Map<String,String> getTurnAroundTime() {
 		return turnAroundTime;
 	}
-	public void setTurnAroundTime(Integer turnAroundTime) {
+	public void setTurnAroundTime(Map<String,String> turnAroundTime) {
 		this.turnAroundTime = turnAroundTime;
 	}
 	public String getType() {
@@ -47,10 +48,10 @@ public class WareRef extends BaseResult {
 	public void setProviderNames(List<String> providerNames) {
 		this.providerNames = providerNames;
 	}
-	public Float getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Float score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	
