@@ -45,7 +45,6 @@ public class AssayDepotImpl
 		
 		Results results = new Results();
 		results.setProviderRefs( new ArrayList<ProviderRef>() );
-		results.setProviders( new ArrayList<Provider>() );
 		results.setFacets( new HashMap<String,Map<String,String>>() );
 		
 		
@@ -89,7 +88,7 @@ public class AssayDepotImpl
 					System.out.println( "token3 = ["+jp.getText()+"]");
 				}
 			} else if ("providerRefs".equals( fieldName )) {
-				getProviderRefs( jp, results );
+				parseProviderRefs( jp, results );
 			} else {
 //				throw new IllegalStateException("Unrecognized field '"+fieldName+"'!");
 				System.out.println("Unrecognized field '"+fieldName+"'!");
@@ -147,7 +146,7 @@ public class AssayDepotImpl
 	 * @throws JsonParseException
 	 * @throws IOException
 	 */
-	private void getProviderRefs( JsonParser jp, Results results ) throws JsonParseException, IOException  {
+	private void parseProviderRefs( JsonParser jp, Results results ) throws JsonParseException, IOException  {
 		ProviderRef pRef = null;	
 		String fieldName = null;
 		while (jp.nextToken() != JsonToken.END_ARRAY ) {

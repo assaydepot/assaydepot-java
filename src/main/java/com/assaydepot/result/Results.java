@@ -56,20 +56,6 @@ public class Results {
 	}
 	public void setProviderRefs(List<ProviderRef> providerRefs) {
 		this.providerRefs = providerRefs;
-	}
-	public List<Ware> getWares() {
-		return wares;
-	}
-	public void setWares(List<Ware> wares) {
-		this.wares = wares;
-	}
-	public List<Provider> getProviders() {
-		return providers;
-	}
-	public void setProviders(List<Provider> providers) {
-		this.providers = providers;
-	}
-	
-	
+	}	
 	
 }

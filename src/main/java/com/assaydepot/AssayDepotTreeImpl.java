@@ -1,9 +1,12 @@
 package com.assaydepot;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,6 +39,31 @@ public class AssayDepotTreeImpl implements AssayDepot {
 	AssayDepotTreeImpl( Configuration conf ) {
 		this.conf = conf;
 	}
+	
+	public Results getProviderRefsByFacets( List <String> facetNames, List<String> facetValues, String query ) {
+		StringBuilder urlBuilder = new StringBuilder( BASE_PROVIDER_REF_QUERY_URL );
+		if( conf.getApiToken() != null ) {
+			urlBuilder.append( "?access_token=" ).append( conf.getApiToken() );
+		}
+		urlBuilder.append( buildFacetString( facetNames, facetValues ));
+		if( query != null ) {
+			urlBuilder.append( "?q=" ).append( query );
+		}
+		return getProviderRefsByURL( urlBuilder.toString() );
+	}
+	
+	public Results getWareRefsByFacets( List<String> facetNames, List<String> facetValues, String query ) {
+		StringBuilder urlBuilder = new StringBuilder( BASE_WARE_REF_QUERY_URL );
+		if( conf.getApiToken() != null ) {
+			urlBuilder.append( "?access_token=" ).append( conf.getApiToken() );
+		}
+		urlBuilder.append( buildFacetString( facetNames, facetValues ));
+		if( query != null ) {
+			urlBuilder.append( "?q=" ).append( query );
+		}
+		return getWareRefsByURL( urlBuilder.toString() );
+	}
+	
 
 	public Provider getProvider( String id )  {
 		StringBuilder urlBuilder = new StringBuilder( BASE_PROVIDER_URL );
@@ -91,6 +119,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return list;
 	}
 	
+	
 	public Results getProviderRefs(String query) {
 		StringBuilder urlBuilder = new StringBuilder( BASE_PROVIDER_REF_QUERY_URL );
 		if( query != null ) {
@@ -100,7 +129,11 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			urlBuilder.append( "&access_token=" ).append( conf.getApiToken() );
 		}
 
-		JsonNode rootNode = doParseURL( urlBuilder.toString() );		
+		return getProviderRefsByURL( urlBuilder.toString() );
+	}
+	
+	private Results getProviderRefsByURL( String url ) {
+		JsonNode rootNode = doParseURL( url );		
 
 		Results results = new Results();
 
@@ -112,8 +145,8 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		results.setProviderRefs( doProviderRefs( rootNode.path( "provider_refs" )));
 		
 		return results;
+		
 	}
-
 	private JsonNode doParseURL( String urlString ) {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = null;
@@ -128,7 +161,11 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		} catch (MalformedURLException malex) {
 			log.error( "Problem accessing url ["+urlString+"]", malex );
 		} catch (IOException ioex ) {
-			log.error("Most likely problem accessing url ["+urlString+"] or internet", ioex );
+			if( ioex.getMessage().contains( "500" ) && ioex.getMessage().contains("HTTP response")) {
+				log.error( "It's possible the facet you are requesting does not exist for this type or the server is busy.", ioex );
+			} else {
+				log.error("Most likely problem with url or problem accessing internet", ioex );
+			}
 		}
 		return rootNode;
 	}
@@ -153,6 +190,42 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			providerRefs.add( newRef );
 		}
 		return providerRefs;
+	}
+	
+	/**
+	 * Takes in a list of names/values and pairs them up to make a good url.  if the list
+	 * sizes don't match up does the best it can by matching up the smallest number of pairs.
+	 * 
+	 * @param facetNames
+	 * @param facetValues
+	 * @return
+	 */
+	private String buildFacetString(List<String> facetNames, List<String>facetValues ) {
+		
+		StringBuilder builder = new StringBuilder();
+
+		if( facetNames != null && facetValues != null ) 
+		{
+			int pairsCount = -1;
+			if( facetNames.size() != facetValues.size() ) {
+				pairsCount = facetNames.size() > facetValues.size() ? facetValues.size() : facetNames.size();
+				log.warn( "facetNames and facetValues lists were of different sizes, your query may not be accurate" );
+			} else {
+				pairsCount = facetNames.size();
+			}
+			for( int i=0; i < pairsCount; i++ ) {
+				try {
+					builder.append( "&facets[").append( facetNames.get( i )).append( "][]=" )
+						.append( URLEncoder.encode( facetValues.get( i ), "UTF-8" ));
+				} catch (UnsupportedEncodingException ignore) {
+				}
+			}
+
+		} else {
+			log.error( "facetNames or facetValues was null, you are defaulting to a regular query using no facet matching" );
+		}
+
+		return builder.toString();
 	}
 	
 	private List<Map<String,String>> doLocations( JsonNode locNode ) {
@@ -204,7 +277,6 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		return facets;
 	}
 
-
 	public Results getWareRefs(String query) {
 			StringBuilder urlBuilder = new StringBuilder( BASE_WARE_REF_QUERY_URL );
 			if( query != null ) {
@@ -213,19 +285,22 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			if( conf.getApiToken() != null ) {
 				urlBuilder.append( "&access_token=" ).append( conf.getApiToken() );
 			}
+			return getWareRefsByURL( urlBuilder.toString() );
+	}
+	
+	private Results getWareRefsByURL( String url ) {
+		JsonNode rootNode = doParseURL( url );		
 
-			JsonNode rootNode = doParseURL( urlBuilder.toString() );		
+		Results results = new Results();
 
-			Results results = new Results();
-
-			results.setTotal( rootNode.path( "total" ).getIntValue() );
-			results.setPage( rootNode.path( "page" ).getIntValue() );
-			results.setPerPage( rootNode.path( "per_page" ).getIntValue() );
-			results.setQueryTime( rootNode.path( "query_time" ).getDoubleValue() );
-			results.setFacets( doFacets( rootNode.path( "facets" )));
-			results.setWareRefs( doWareRefs( rootNode.path( "ware_refs" )));
-			
-			return results;
+		results.setTotal( rootNode.path( "total" ).getIntValue() );
+		results.setPage( rootNode.path( "page" ).getIntValue() );
+		results.setPerPage( rootNode.path( "per_page" ).getIntValue() );
+		results.setQueryTime( rootNode.path( "query_time" ).getDoubleValue() );
+		results.setFacets( doFacets( rootNode.path( "facets" )));
+		results.setWareRefs( doWareRefs( rootNode.path( "ware_refs" )));
+		
+		return results;		
 	}
 	
 	private List<WareRef> doWareRefs( JsonNode pRefNode ) {
@@ -301,6 +376,16 @@ public class AssayDepotTreeImpl implements AssayDepot {
 		ware.setUrls( doStringMap( wNode.path( "urls") ));
 		
 		return ware;
+	}
+
+	public Collection<String> getAvailableWareRefFacetNames() {
+		Results results = getWareRefs("antibody");
+		return results.getFacets().keySet();
+	}
+
+	public Collection<String> getAvailableProviderRefFacetNames() {
+		Results results = getProviderRefs("antibody");
+		return results.getFacets().keySet();
 	}
 
 }

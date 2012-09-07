@@ -1,5 +1,10 @@
 package com.assaydepot;
 
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import com.assaydepot.conf.Configuration;
@@ -50,4 +55,42 @@ public class AssayDepotTest extends TestCase {
 		assertEquals( ware.getUrls().size() > 0, true );
 	}
 	
+	public void testGetProviderRefsByFacet() throws Exception {
+		Configuration conf = new Configuration();
+		conf.setApiToken("5ae0a040967efe332d237277afb6beca");
+		AssayDepot assayDepot = AssayDepotFactory.getAssayDepot( conf );
+		List<String> facetNames = new ArrayList<String>();
+		List<String> facetValues = new ArrayList<String>();
+		facetNames.add( "countries_facet" );
+		facetValues.add( "United States" );
+		Results results = assayDepot.getProviderRefsByFacets(facetNames, facetValues, null );
+		assertEquals( results.getTotal() > 3000, true );
+		assertEquals( results.getFacets().containsKey( facetNames.get(0) ), true );
+	
+		int oldResultTotal = results.getTotal();
+		results = assayDepot.getProviderRefsByFacets(facetNames, facetValues, "antibody");
+		assertEquals( results.getTotal() < oldResultTotal, true );
+		assertEquals( results.getFacets().containsKey( facetNames.get(0) ), true );
+
+	}
+	
+	public void testGetWareRefsByFacet() throws Exception {
+		Configuration conf = new Configuration();
+		conf.setApiToken("5ae0a040967efe332d237277afb6beca");
+		AssayDepot assayDepot = AssayDepotFactory.getAssayDepot( conf );
+		List<String> facetNames = new ArrayList<String>();
+		List<String> facetValues = new ArrayList<String>();
+		facetNames.add( "countries" );
+		facetValues.add( "United States" );
+		Results results = assayDepot.getWareRefsByFacets(facetNames, facetValues, null );
+		assertEquals( results.getTotal() > 200, true );
+		assertEquals( results.getFacets().containsKey( facetNames.get(0) ), true );
+		
+		int oldResultTotal = results.getTotal();
+		results = assayDepot.getWareRefsByFacets(facetNames, facetValues, "antibody" );
+		assertEquals( results.getTotal() < oldResultTotal, true );
+		assertEquals( results.getFacets().containsKey( facetNames.get(0) ), true );
+
+	}
+
 }
