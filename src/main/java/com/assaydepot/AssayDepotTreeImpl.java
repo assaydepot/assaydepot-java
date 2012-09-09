@@ -164,7 +164,7 @@ public class AssayDepotTreeImpl implements AssayDepot {
 			if( ioex.getMessage().contains( "500" ) && ioex.getMessage().contains("HTTP response")) {
 				log.error( "It's possible the facet you are requesting does not exist for this type or the server is busy.", ioex );
 			} else {
-				log.error("Most likely problem with url or problem accessing internet", ioex );
+				log.error("Most likely problem with url or problem accessing internet, url ["+urlString+"]", ioex );
 			}
 		}
 		return rootNode;
